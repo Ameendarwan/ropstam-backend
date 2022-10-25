@@ -10,7 +10,6 @@ const transporter = createTransport({
     pass: 'uieykabfsrgrjpph',
   },
   requireTLS: false,
-  // tls: { port: 465, rejectUnauthorized: false },
 });
 
 const sendEmail = async (emailPayload) => {

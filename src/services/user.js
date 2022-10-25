@@ -3,7 +3,6 @@ import { Users } from '../models/index';
 import { HTTP_STATUS, EMAIL_SUBJECTS, RESPOND_MESSAGES } from '../utils/CONSTANTS.js';
 import { sendEmail } from './emailService';
 import {
-  verifyJwt,
   generateToken,
   signRefreshToken,
   hashString,
@@ -17,7 +16,6 @@ const TEMPORARY_PASS = process.env.TEMPORARY_PASS;
 const register = async (_data) => {
   try {
     const data = { ..._data };
-
     // -- Check user already exists with the given email --//
     const isUser = await Users.findOne({ where: { email: data.email } });
 

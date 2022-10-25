@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const utils = require("../utils/utils");
+const utils = require('../utils/utils');
 
 class ExtendableError extends Error {
   constructor(message, status, isPublic) {
@@ -15,11 +15,7 @@ class ExtendableError extends Error {
 }
 
 class APIError extends ExtendableError {
-  constructor(
-    message,
-    status = utils.Status.INTERNAL_SERVER_ERROR,
-    isPublic = false
-  ) {
+  constructor(message, status = utils.Status.INTERNAL_SERVER_ERROR, isPublic = false) {
     super(message, status, isPublic);
   }
 }

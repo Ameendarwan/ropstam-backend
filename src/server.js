@@ -6,7 +6,6 @@ import swaggerSpecs from './config/swagger';
 require('dotenv').config();
 import cors from 'cors';
 import { SERVER_PORT, ENVIRONMENTS } from './utils/CONSTANTS.js';
-import passport from './middleware/passport';
 
 const app = express();
 app.use(bodyParser.json({ limit: '5mb' }));
@@ -17,7 +16,6 @@ app.use(
     credentials: true,
   })
 );
-passport();
 
 import { init } from './api/routes';
 init(app); // initialize routes
