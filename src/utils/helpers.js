@@ -118,24 +118,6 @@ export const randomStringGenerator = (length) => {
   return buf.toString('hex');
 };
 
-const getDomain = () => {
-  if (process.env.NODE_ENV === 'local') return 'localhost';
-  return process.env.NODE_ENV === 'production' ? 'bookado.uk' : 'togethersupport.co.uk';
-};
-
-export const createCookie = (res, key, value) =>
-  res.cookie(key, value, {
-    httpOnly: true,
-    secure: ['development', 'quality', 'production', 'staging'].includes(process.env.NODE_ENV),
-    domain: getDomain(),
-  });
-export const removeCookie = (res, key) =>
-  res.clearCookie(key, {
-    httpOnly: true,
-    secure: ['development', 'quality', 'production', 'staging'].includes(process.env.NODE_ENV),
-    domain: getDomain(),
-  });
-
 export const isValidUrl = (url) => {
   return url.startsWith('https://');
 };

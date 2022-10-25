@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import { Users } from '../models/index';
-import { HTTP_STATUS, EMAIL_SUBJECTS, LOGGER_TAGS, RESPOND_MESSAGES } from '../utils/CONSTANTS.js';
+import { HTTP_STATUS, EMAIL_SUBJECTS, RESPOND_MESSAGES } from '../utils/CONSTANTS.js';
 import { sendEmail } from './emailService';
 import {
-  signRefreshToken,
-  generateToken,
   verifyJwt,
+  generateToken,
+  signRefreshToken,
   hashString,
-  randomStringGenerator,
   errorResponse,
   successResponse,
   compareString,
@@ -31,22 +30,16 @@ const register = async (_data) => {
     const newUser = await Users.create(data);
     const user = await newUser.save();
 
-    // // --- Sending Email to user with generated token ---//
-    // const emailBuilder = {
-    //   to: user.email,
-    //   subject: EMAIL_SUBJECTS.VERIFICATION,
-    //   template: 'emailVerification/html2.ejs',
-    //   paramsToRender: {
-    //     name: user.firstName + ' ' + user?.lastName,
-    //     token: verificationToken.token,
-    //     hostUrl: process.env.APP_URL,
-    //     email: user.email,
-    //   },
-    // };
-    // const emailResponse = await sendEmail(emailBuilder);
-    // if (emailResponse.failure) {
-    //   throw new Error(RESPOND_MESSAGES.VERIFICATION_MAIL_SEND_FAILURE);
-    // }
+    // --- Sending Email to user with generated token ---//
+    const emailBuilder = {
+      to: user.email,
+      subject: `${EMAIL_SUBJECTS.WELCOME} ${user.firstName}!`,
+      text: `Hi ${user.firstName}, your temporary passwors is: ${TEMPORARY_PASS}`,
+    };
+    const emailResponse = await sendEmail(emailBuilder);
+    if (emailResponse.failure) {
+      throw new Error(RESPOND_MESSAGES.WELCOME_EMAIL_FAILURE);
+    }
 
     return successResponse({ user }, HTTP_STATUS.OK, RESPOND_MESSAGES.USER_REGISTERED);
   } catch (error) {
@@ -65,7 +58,20 @@ const login = async (data) => {
     if (!isCorrectPassword)
       return errorResponse(HTTP_STATUS.BAD_REQUEST, RESPOND_MESSAGES.INCORRECT_PASSWORD);
 
-    return successResponse({}, HTTP_STATUS.OK, RESPOND_MESSAGES.USER_AUTHUTHENTICATED);
+    // -- Generate Token --//
+    const accessToken = generateToken({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    });
+    const refreshToken = signRefreshToken({ id: user.id });
+
+    return successResponse(
+      { accessToken, refreshToken },
+      HTTP_STATUS.OK,
+      RESPOND_MESSAGES.USER_AUTHUTHENTICATED
+    );
   } catch (error) {
     return errorResponse(HTTP_STATUS.INTERNAL_SERVER_ERROR, error.message);
   }

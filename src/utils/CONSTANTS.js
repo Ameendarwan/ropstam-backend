@@ -16,7 +16,7 @@ export const ENVIRONMENTS = {
 };
 
 export const EMAIL_SUBJECTS = {
-  WELCOME: 'Ropstam, Welcome Ameen!',
+  WELCOME: 'Ropstam, Welcome',
 };
 
 export const RESPOND_MESSAGES = {
@@ -34,4 +34,6 @@ export const RESPOND_MESSAGES = {
   CAR_ADDED: 'Car has been added successfully!',
   CAR_UPDATED: 'Car has been updated successfully!',
   CAR_DELETED: 'Car has been deleted successfully!',
+  WELCOME_EMAIL_SUCCESS: 'Welcome email has been sent successfully!',
+  WELCOME_EMAIL_FAILURE: 'Welcome email not sent due to an error!',
 };

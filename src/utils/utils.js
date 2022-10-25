@@ -4,6 +4,24 @@ const apiCallerName = (text) => {
   console.log('======================================');
 };
 
+const AppMessages = {
+  INCORRECT_CREDENTIAL: 'Invalid email or password.',
+  INCORRECT_USERNAME: 'Incorrect email.',
+  INCORRECT_EMAIL: 'Incorrect email.',
+  INCORRECT_PASSWORD: 'Incorrect password.',
+  ALREADY_EXISTS: 'Already Exists.',
+  EMAIL_ALREADY_EXISTS: 'email already exists.',
+  DOES_NOT_EXISTS: 'Does Not Exists.',
+  USER_NOT_FOUND: 'User Not Found.',
+  DATA_NOT_FOUND: 'No Data Found.',
+  OPERATION_UNSUCCESSFUL: 'Operation Unsuccessful.',
+  OPERATION_SUCCESSFUL: 'Operation Successful.',
+  PARAMS_MISSING: 'Params are missing.',
+  IS_REQUIRED: 'is required',
+  IS_NOT_VALID: 'is not valid',
+  IN_FUTURE: 'should be in future',
+};
+
 const Status = {
   OK: 200,
   CREATED: 201,

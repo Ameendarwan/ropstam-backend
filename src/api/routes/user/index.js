@@ -1,7 +1,5 @@
 import { Router } from 'express';
-import passport from 'passport';
 import UserController from '../../../controllers/user';
-import { validateApiRequest } from '../../../validations/common.js';
 const UserRouter = Router();
 
 const path = '/user';
@@ -9,7 +7,7 @@ const path = '/user';
 /**
  * @swagger
  *
- * /api/auth/register:
+ * /api/user/register:
  *   post:
  *    summary: Creating new user
  *    produces:
@@ -42,7 +40,7 @@ UserRouter.post(`${path}/register`, UserController.register);
 /**
  * @swagger
  *
- * /api/auth/login:
+ * /api/user/login:
  *   post:
  *    summary: Use for user authentication
  *    produces:

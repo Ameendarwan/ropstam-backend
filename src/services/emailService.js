@@ -1,31 +1,25 @@
 import { createTransport } from 'nodemailer';
-import { renderFile } from 'ejs';
-import { resolve } from 'path';
 
-const FROM_EMAIL = 'Ameen Ropstam';
-const templateDir = `${__dirname}/../templates/views/`;
+const FROM_EMAIL = 'ameen.darwan@wearenova.co.uk';
 const transporter = createTransport({
-  //   host: 'email-smtp.eu-west-2.amazonaws.com',
+  host: 'smtp.gmail.com',
   port: 587,
   secure: false,
-  //   auth: {
-  //     user: process.env.AWS_SES_USER,
-  //     pass: process.env.AWS_SES_PASS,
-  //   },
-  tls: { port: 465, rejectUnauthorized: false },
+  auth: {
+    user: 'ameen.darwan@wearenova.co.uk',
+    pass: 'uieykabfsrgrjpph',
+  },
+  requireTLS: false,
+  // tls: { port: 465, rejectUnauthorized: false },
 });
 
 const sendEmail = async (emailPayload) => {
   try {
-    const html = await renderFile(
-      resolve(templateDir, emailPayload.template),
-      emailPayload.paramsToRender
-    );
     const response = await transporter.sendMail({
       to: emailPayload.to,
       from: FROM_EMAIL,
       subject: emailPayload.subject,
-      html,
+      text: emailPayload.text,
     });
     return { success: response };
   } catch (e) {
